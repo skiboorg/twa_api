@@ -1,0 +1,12 @@
+djangorestframework
+django-cors-headers
+
+djoser
+
+requests
+flask
+django-colorfield
+django-filter
+django-cleanup
+django-ckeditor-5
+python-telegram-bot==13.15
