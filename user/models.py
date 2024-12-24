@@ -58,9 +58,9 @@ class User(AbstractUser):
     uuid = models.UUIDField(default=uuid.uuid4)
 
     tg_id = models.CharField( max_length=255, blank=False, null=True,  unique=True)
-    photo_url = models.CharField( max_length=255, blank=False, null=True,  unique=True)
-    firstname = models.CharField( max_length=255, blank=False, null=True,  unique=True)
-    lastname = models.CharField( max_length=255, blank=False, null=True,  unique=True)
+    photo_url = models.CharField( max_length=255, blank=False, null=True)
+    firstname = models.CharField( max_length=255, blank=False, null=True)
+    lastname = models.CharField( max_length=255, blank=False, null=True,)
     username = models.CharField( max_length=255, blank=False, null=True,  unique=True)
     balance = models.IntegerField(default=0)
     rating = models.DecimalField(default=0, decimal_places=2, max_digits=8)
