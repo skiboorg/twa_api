@@ -15,6 +15,10 @@ logger = logging.getLogger(__name__)
 
 
 
+class GetSocialServices(generics.ListAPIView):
+    serializer_class = SocialServiceSerializer
+    queryset = SocialService.objects.all()
+
 class GetUser(generics.RetrieveAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = UserSerializer
@@ -39,6 +43,21 @@ class CreatePassword(APIView):
         user.save()
         return Response(status=status.HTTP_200_OK)
 
+
+class SocialAction(APIView):
+    def post(self, request):
+        data = request.data
+        print(data)
+        action = data.get("action")
+        if action == "add":
+            UserService.objects.create(
+                service_id = data.get('service'),
+            user=request.user,
+            link=data.get('link')
+            )
+        else:
+            UserService.objects.get(id=data.get('id')).delete()
+        return Response(status=status.HTTP_200_OK)
 
 class CheckUser(APIView):
     def post(self, request):

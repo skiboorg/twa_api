@@ -80,5 +80,5 @@ class User(AbstractUser):
 
 class UserService(models.Model):
     service = models.ForeignKey(SocialService, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='social')
     link = models.CharField(max_length=255, blank=False, null=True, unique=True)

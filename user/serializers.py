@@ -17,8 +17,22 @@ logger = logging.getLogger(__name__)
 
 
 
+class SocialServiceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SocialService
+        fields = '__all__'
+
+
+class UserSocialServiceSerializer(serializers.ModelSerializer):
+    service = SocialServiceSerializer(many=False, read_only=True)
+    class Meta:
+        model = UserService
+        fields = '__all__'
+
+
 class UserSerializer(serializers.ModelSerializer):
     tasks = UserTaskShortSerializer(many=True,read_only=True)
+    social = UserSocialServiceSerializer(many=True,read_only=True)
     class Meta:
         model = User
         fields = [
@@ -27,7 +41,11 @@ class UserSerializer(serializers.ModelSerializer):
             'firstname',
             'lastname',
             'username',
-            'tasks'
+            'tasks',
+            'balance',
+            'rating',
+            'is_verified',
+            'social'
         ]
 
         extra_kwargs = {

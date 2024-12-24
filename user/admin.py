@@ -3,6 +3,13 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
 from .models import *
 
+class UserServiceInline(admin.TabularInline):  # Можно заменить на StackedInline для другого вида
+    model = UserService
+    extra = 1  # Количество пустых форм для добавления новых записей
+    verbose_name = "User Service"
+    verbose_name_plural = "User Services"
+    fk_name = "user"  # Указывает, какой ForeignKey связывает UserService с User
+
 
 class UserAdmin(BaseUserAdmin):
     list_display = (
@@ -13,7 +20,7 @@ class UserAdmin(BaseUserAdmin):
 
     )
     ordering = ('id',)
-
+    inlines = [UserServiceInline]
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
@@ -46,6 +53,7 @@ class UserAdmin(BaseUserAdmin):
 
 
 admin.site.register(User,UserAdmin)
+admin.site.register(SocialService)
 
 
 
