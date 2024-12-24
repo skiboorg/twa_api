@@ -19,10 +19,25 @@ class UserTaskLinkInline(admin.TabularInline):
 
 class TaskAdmin(admin.ModelAdmin):
     model = Task
+    search_fields = ('id','name')
+    list_filter = (
+        'in_work', 'in_review', 'is_done'
+    )
+    list_display = (
+        'id',
+        'name',
+                    'short_description',
+                    'price','in_work','in_review','is_done','deadline_date',)
     inlines = [FileInline,LinkInline]
 
 class UserTaskAdmin(admin.ModelAdmin):
     model = UserTask
+    search_fields = ('task__id','task__name','user__tg_id','user__username')
+    list_filter = (
+        'need_verify',
+    )
+    list_display = ('user','task__id','task__name','created_at','need_verify'
+                    )
     inlines = [UserTaskFileInline,UserTaskLinkInline]
 
 

@@ -45,6 +45,7 @@ class UserSerializer(serializers.ModelSerializer):
             'balance',
             'rating',
             'is_verified',
+            'wallet',
             'social'
         ]
 

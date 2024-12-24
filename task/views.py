@@ -28,7 +28,7 @@ class GetFilters(generics.ListAPIView):
 
 class GetTasks(generics.ListAPIView):
     serializer_class = TaskShortSerializer
-    queryset = Task.objects.filter(is_done=False,in_work=False)
+    queryset = Task.objects.filter(is_done=False,in_work=False,in_review=False)
     filter_backends = [DjangoFilterBackend]
     filterset_class = TaskFilter
 
@@ -49,6 +49,7 @@ class TakeVerify(APIView):
 
         user_task = UserTask.objects.get(task_id=id)
         print(user_task)
+        user_task.task.in_work=False
         user_task.task.in_review=True
         user_task.task.save()
         user_task.need_verify = True

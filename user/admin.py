@@ -13,9 +13,11 @@ class UserServiceInline(admin.TabularInline):  # Можно заменить н�
 
 class UserAdmin(BaseUserAdmin):
     list_display = (
+        'username',
         'firstname',
         'lastname',
-        'date_joined',
+        'balance',
+        'rating',
 
 
     )
@@ -30,7 +32,7 @@ class UserAdmin(BaseUserAdmin):
                        'password1',
                        'password2',
                        ), }),)
-    search_fields = ('id','ton_wallet',)
+    search_fields = ('id','wallet',)
 
     fieldsets = (
         (None, {'fields': ()}),
@@ -43,6 +45,7 @@ class UserAdmin(BaseUserAdmin):
          'lastname',
          'username',
          'balance',
+         'wallet',
              'rating',
              'is_verified'
 

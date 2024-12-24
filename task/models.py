@@ -53,7 +53,9 @@ class UserTask(models.Model):
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
     user = models.ForeignKey('user.User', on_delete=models.CASCADE, blank=True, null=True, related_name='tasks')
     created_at = models.DateTimeField(auto_now_add=True, null=True)
-    need_verify = models.BooleanField(default=False, null=False)
+    need_verify = models.BooleanField('Нужна проверка',default=False, null=False)
+    need_extra_work = models.BooleanField('На доработке', default=False, null=False)
+    decline = models.BooleanField('Отказался', default=False, null=False)
     worker_comment = models.TextField(blank=True, null=True, default=None)
     admin_comment = models.TextField(blank=True, null=True, default=None)
 

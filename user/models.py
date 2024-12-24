@@ -62,6 +62,7 @@ class User(AbstractUser):
     firstname = models.CharField( max_length=255, blank=False, null=True)
     lastname = models.CharField( max_length=255, blank=False, null=True,)
     username = models.CharField( max_length=255, blank=False, null=True,  unique=True)
+    wallet = models.CharField( max_length=255, blank=False, null=True,  unique=True)
     balance = models.IntegerField(default=0)
     rating = models.DecimalField(default=0, decimal_places=2, max_digits=8)
     is_verified = models.BooleanField(default=False, null=False)
@@ -71,7 +72,7 @@ class User(AbstractUser):
     objects = UserManager()
 
     def __str__(self):
-        return f'{self.tg_id}'
+        return f'{self.username} '
 
     class Meta:
         verbose_name = 'Пользователь'
@@ -82,3 +83,5 @@ class UserService(models.Model):
     service = models.ForeignKey(SocialService, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='social')
     link = models.CharField(max_length=255, blank=False, null=True, unique=True)
+    code = models.CharField(max_length=255, blank=False, null=True, unique=True)
+    is_verified = models.BooleanField(default=False, null=False)
