@@ -35,6 +35,31 @@ class UpdateUser(generics.UpdateAPIView):
         return User.objects.get(uuid=self.request.user.uuid)
 
 
+class NewRequest(APIView):
+    permission_classes = [IsAuthenticated]
+    def post(self, request):
+        result = {"success": False}
+        data = request.data
+        user = request.user
+        amount = data.get('amount', None)
+        if amount is None:
+            return Response(result, status=status.HTTP_200_OK)
+        if user.balance < amount:
+            return Response(result, status=status.HTTP_200_OK)
+
+        WithdrawalRequest.objects.create(
+            user=user,
+            wallet=user.wallet,
+            amount=amount,
+            before_balance=user.balance
+        )
+        user.balance -= amount
+        user.save()
+        result = {"success": True}
+
+        return Response(result, status=status.HTTP_200_OK)
+
+
 class CreatePassword(APIView):
     def post(self, request):
         data = request.data
@@ -52,8 +77,8 @@ class SocialAction(APIView):
         if action == "add":
             UserService.objects.create(
                 service_id = data.get('service'),
-            user=request.user,
-            link=data.get('link')
+                user=request.user,
+                link=data.get('link')
             )
         else:
             UserService.objects.get(id=data.get('id')).delete()

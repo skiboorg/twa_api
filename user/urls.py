@@ -8,5 +8,6 @@ urlpatterns = [
     path('social_services', views.GetSocialServices.as_view()),
     path('social_action', views.SocialAction.as_view()),
     path('create_password', views.CreatePassword.as_view()),
+    path('new_request', views.NewRequest.as_view()),
 
 ]

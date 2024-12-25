@@ -58,11 +58,11 @@ class User(AbstractUser):
     uuid = models.UUIDField(default=uuid.uuid4)
 
     tg_id = models.CharField( max_length=255, blank=False, null=True,  unique=True)
-    photo_url = models.CharField( max_length=255, blank=False, null=True)
-    firstname = models.CharField( max_length=255, blank=False, null=True)
-    lastname = models.CharField( max_length=255, blank=False, null=True,)
-    username = models.CharField( max_length=255, blank=False, null=True,  unique=True)
-    wallet = models.CharField( max_length=255, blank=False, null=True,  unique=True)
+    photo_url = models.CharField( max_length=255, blank=True, null=True)
+    firstname = models.CharField( max_length=255, blank=True, null=True)
+    lastname = models.CharField( max_length=255, blank=True, null=True,)
+    username = models.CharField( max_length=255, blank=True, null=True,  unique=True)
+    wallet = models.CharField( max_length=255, blank=True, null=True,  unique=True)
     balance = models.IntegerField(default=0)
     rating = models.DecimalField(default=0, decimal_places=2, max_digits=8)
     is_verified = models.BooleanField(default=False, null=False)
@@ -85,3 +85,17 @@ class UserService(models.Model):
     link = models.CharField(max_length=255, blank=False, null=True, unique=True)
     code = models.CharField(max_length=255, blank=False, null=True, unique=True)
     is_verified = models.BooleanField(default=False, null=False)
+
+
+class WithdrawalRequest(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, related_name='requests')
+    wallet = models.CharField(max_length=255, blank=False, null=True)
+    amount = models.IntegerField(default=0)
+    before_balance = models.IntegerField(default=0)
+    comment = models.TextField(blank=True, null=True)
+    is_done = models.BooleanField(default=False, null=False)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
+
+    class Meta:
+        verbose_name = 'Запрос на вывод'
+        verbose_name_plural = '2. Запрос на вывод'

@@ -54,9 +54,17 @@ class UserAdmin(BaseUserAdmin):
          ),
         ('Permissions', {'fields': ('is_staff', 'is_superuser', 'groups',)}),)
 
+class WithdrawalRequestAdmin(admin.ModelAdmin):
+    model = WithdrawalRequest
+    search_fields = ('user__tg_id','user__username')
+    list_filter = (
+        'is_done',
+    )
+    list_display = ('user','amount','created_at','is_done')
 
 admin.site.register(User,UserAdmin)
 admin.site.register(SocialService)
+admin.site.register(WithdrawalRequest, WithdrawalRequestAdmin)
 
 
 

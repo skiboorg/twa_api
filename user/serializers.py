@@ -17,6 +17,11 @@ logger = logging.getLogger(__name__)
 
 
 
+class WithdrawalRequestSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = WithdrawalRequest
+        fields = '__all__'
+
 class SocialServiceSerializer(serializers.ModelSerializer):
     class Meta:
         model = SocialService
