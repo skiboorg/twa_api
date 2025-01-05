@@ -1,6 +1,5 @@
 import json
 import random
-import requests
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
@@ -88,6 +87,7 @@ class CheckUser(APIView):
     def post(self, request):
         data = request.data
         user, created = User.objects.get_or_create(tg_id=data.get('id'))
+        print(data)
         if created:
             user.firstname = data.get('first_name')
             user.lastname = data.get('last_name')

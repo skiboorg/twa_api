@@ -38,6 +38,7 @@ class UserSocialServiceSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     tasks = UserTaskShortSerializer(many=True,read_only=True)
     social = UserSocialServiceSerializer(many=True,read_only=True)
+    requests = WithdrawalRequestSerializer(many=True,read_only=True)
     class Meta:
         model = User
         fields = [
@@ -51,7 +52,8 @@ class UserSerializer(serializers.ModelSerializer):
             'rating',
             'is_verified',
             'wallet',
-            'social'
+            'social',
+            'requests'
         ]
 
         extra_kwargs = {

@@ -42,12 +42,12 @@ class Task(models.Model):
 class File(models.Model):
     task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name='files')
     file = models.FileField(upload_to='tasks/', blank=True, null=True)
-
+    name = models.CharField(max_length=255, blank=True, null=True)
 
 class Link(models.Model):
     task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name='links')
     url = models.CharField(max_length=255, blank=True, null=True)
-
+    name = models.CharField(max_length=255, blank=True, null=True)
 
 class UserTask(models.Model):
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
@@ -56,6 +56,7 @@ class UserTask(models.Model):
     need_verify = models.BooleanField('Нужна проверка',default=False, null=False)
     need_extra_work = models.BooleanField('На доработке', default=False, null=False)
     decline = models.BooleanField('Отказался', default=False, null=False)
+    timeout = models.BooleanField('Просрочено', default=False, null=False)
     worker_comment = models.TextField(blank=True, null=True, default=None)
     admin_comment = models.TextField(blank=True, null=True, default=None)
 

@@ -21,7 +21,9 @@ class TaskAdmin(admin.ModelAdmin):
     model = Task
     search_fields = ('id','name')
     list_filter = (
-        'in_work', 'in_review', 'is_done'
+        'in_work',
+        'in_review',
+        'is_done',
     )
     list_display = (
         'id',
@@ -35,8 +37,13 @@ class UserTaskAdmin(admin.ModelAdmin):
     search_fields = ('task__id','task__name','user__tg_id','user__username')
     list_filter = (
         'need_verify',
+        'timeout',
+        'need_extra_work',
+        'decline',
     )
-    list_display = ('user','task__id','task__name','created_at','need_verify'
+
+    list_display = ('user','task__id','task__name','created_at','need_verify','timeout','need_extra_work',
+        'decline',
                     )
     inlines = [UserTaskFileInline,UserTaskLinkInline]
 

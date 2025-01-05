@@ -97,5 +97,6 @@ class WithdrawalRequest(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, null=True)
 
     class Meta:
+        ordering = ['-created_at']
         verbose_name = 'Запрос на вывод'
         verbose_name_plural = '2. Запрос на вывод'
