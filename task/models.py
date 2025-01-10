@@ -69,3 +69,9 @@ class UserTaskFile(models.Model):
 class UserTaskLink(models.Model):
     task = models.ForeignKey(UserTask, on_delete=models.CASCADE, related_name='links')
     url = models.CharField(max_length=255, blank=True, null=True)
+
+
+class RejectHistory(models.Model):
+    task = models.ForeignKey(Task, on_delete=models.CASCADE)
+    user = models.ForeignKey('user.User', on_delete=models.CASCADE, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)

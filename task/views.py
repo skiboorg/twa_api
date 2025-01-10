@@ -61,12 +61,40 @@ class TakeVerify(APIView):
         for link in links:
             UserTaskLink.objects.create(task=user_task, url=link)
         return Response(status=200)
+
+class RejectTask(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request):
+        result = {'success': True,'message': 'Вы отказались от задачи'}
+        task_id = request.data.get('id', None)
+        user = request.user
+        print(task_id)
+        RejectHistory.objects.create(
+            task_id=task_id,
+            user=user
+        )
+        task = Task.objects.get(id=task_id)
+        task.in_work = False
+        task.save()
+        user.tasks.filter(task=task).delete()
+        return Response(result, status=200)
+
 class TakeTask(APIView):
     permission_classes = (IsAuthenticated,)
     def post(self, request):
         result = {'success':False}
         task_id = request.data.get('id', None)
         user = request.user
+
+        user_active_tasks = user.tasks.filter(
+            task__in_work=True,
+            task__is_done=False,
+        )
+        print(user_active_tasks.count())
+        if user_active_tasks.count() >= 3:
+            result = {'success': False, 'message': 'У вас уже есть 3 активные задачи'}
+            return Response(result, status=200)
         if task_id is not None:
             task = Task.objects.get(id=task_id)
             UserTask.objects.create(

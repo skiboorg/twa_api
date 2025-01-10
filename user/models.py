@@ -100,3 +100,21 @@ class WithdrawalRequest(models.Model):
         ordering = ['-created_at']
         verbose_name = 'Запрос на вывод'
         verbose_name_plural = '2. Запрос на вывод'
+
+
+class Chat(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+    have_new_message = models.BooleanField(default=False, null=False)
+    class Meta:
+        verbose_name = 'Чаты'
+        verbose_name_plural = '3. Чаты'
+
+class ChatMessage(models.Model):
+    chat = models.ForeignKey(Chat, on_delete=models.CASCADE, blank=True, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+    message = models.TextField(blank=True, null=True)
+    is_read = models.BooleanField(default=False, null=False)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
+
+    class Meta:
+        ordering = ['-created_at']

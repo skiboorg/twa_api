@@ -51,4 +51,5 @@ class UserTaskAdmin(admin.ModelAdmin):
 admin.site.register(Task,TaskAdmin)
 admin.site.register(Filter)
 admin.site.register(Level)
+admin.site.register(RejectHistory)
 admin.site.register(UserTask,UserTaskAdmin)
